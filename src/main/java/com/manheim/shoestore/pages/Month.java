@@ -68,7 +68,7 @@ public class Month {
     private void doesElementDataExist(WebDriver driver, int rowNumber, By element, String message) {
         List<WebElement> webElements = driver.findElements(element);
         int textLength = webElements.get(rowNumber).getText().length();
-        softAssert.assertTrue(textLength > 0, "Cannot Find text for " + message + "; row number  " + rowNumber);
+        softAssert.assertTrue(textLength > 0, "Cannot Find text for " + message + "; row number  " + rowNumber+1);
     }
 
     /**
@@ -80,7 +80,7 @@ public class Month {
     private void doesImagesExist(WebDriver driver, int rowNumber) {
         List<WebElement> webElements = driver.findElements(shoeImage);
         String imgURL = webElements.get(rowNumber).getAttribute("src");
-        softAssert.assertTrue(imgURL.toLowerCase().contains(".jpg"), "Cannot Find Image for RowNumber " + rowNumber);
+        softAssert.assertTrue(imgURL.toLowerCase().contains(".jpg"), "Cannot Find Image for RowNumber " + rowNumber+1);
     }
 
     /**
