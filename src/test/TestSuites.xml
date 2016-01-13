@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Test" verbose="1" parallel="tests" thread-count="5">
+    <test name="Manheim Dhoe Store Tests">
+        <classes>
+            <class name="com.manheim.shoestore.Story1" />
+            <class name="com.manheim.shoestore.Story2" />
+        </classes>
+    </test>
+</suite>
