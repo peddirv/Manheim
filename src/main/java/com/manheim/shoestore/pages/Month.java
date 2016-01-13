@@ -1,8 +1,8 @@
 package com.manheim.shoestore.pages;
+
 /**
  * Created by rpeddi on 1/12/2016.
  */
-
 
 import java.util.List;
 
@@ -12,8 +12,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
+/**
+ * TODO: Enter Javadoc
+ */
 public class Month {
 
     //~ Instance fields ------------------------------------------------------------------------------------------------
@@ -22,6 +25,7 @@ public class Month {
     By shoeDescription = By.xpath("//td[@class='shoe_result_value shoe_description']");
     By shoeFrames = By.xpath("//ul['shoe_list']/li/div['shoe_result']");
     By shoeImage = By.xpath("//td[@class='shoe_image']/img");
+    private SoftAssert softAssert = new SoftAssert();
 
     //~ Methods --------------------------------------------------------------------------------------------------------
 
@@ -37,18 +41,18 @@ public class Month {
         doesImagesExist(driver, rowNumber);
     }
 
-
     /**
      * get count of shoes available
      *
-     * @param driver    in value
+     * @param driver in value
+     * @return out value
      */
     public int getShoeFrameCount(WebDriver driver) {
         try {
             driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
             return driver.findElements(shoeFrames).size();
         } catch (Exception e) {
-            System.out.println("Failed : Cannot Find any Shoes");
+            softAssert.fail("Failed : Cannot Find any Shoes");
             return 0;
         }
     }
@@ -62,13 +66,9 @@ public class Month {
      * @param message   in value
      */
     private void doesElementDataExist(WebDriver driver, int rowNumber, By element, String message) {
-        try {
-            List<WebElement> webElements = driver.findElements(element);
-            int textLength = webElements.get(rowNumber).getText().length();
-            Assert.assertTrue(textLength > 0, "Verify " + message + " - " + webElements.get(rowNumber).getText());
-        } catch (AssertionError e) {
-            System.out.println("Failed : Cannot Find - " + message);
-        }
+        List<WebElement> webElements = driver.findElements(element);
+        int textLength = webElements.get(rowNumber).getText().length();
+        softAssert.assertTrue(textLength > 0, "Cannot Find text for " + message + "; row number  " + rowNumber);
     }
 
     /**
@@ -78,13 +78,9 @@ public class Month {
      * @param rowNumber in value
      */
     private void doesImagesExist(WebDriver driver, int rowNumber) {
-        try {
-            List<WebElement> webElements = driver.findElements(shoeImage);
-            String imgURL = webElements.get(rowNumber).getAttribute("src");
-            Assert.assertTrue(imgURL.toLowerCase().contains(".jpg"), "Verify Image - " + imgURL);
-        } catch (AssertionError e) {
-            System.out.println("Failed : Cannot Find - Image");
-        }
+        List<WebElement> webElements = driver.findElements(shoeImage);
+        String imgURL = webElements.get(rowNumber).getAttribute("src");
+        softAssert.assertTrue(imgURL.toLowerCase().contains(".jpg"), "Cannot Find Image for RowNumber " + rowNumber);
     }
 
     /**
@@ -106,4 +102,12 @@ public class Month {
     private void doesShoePriceExist(WebDriver driver, int rowNumber) {
         doesElementDataExist(driver, rowNumber, price, " Shoe Price ");
     }
+
+    /**
+     * Call the method to assert all the failures
+     */
+    public void assertAll() {
+        softAssert.assertAll();
+    }
+
 }

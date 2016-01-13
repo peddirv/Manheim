@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 public class HomePage {
 
@@ -17,15 +17,15 @@ public class HomePage {
     private static By email = By.id("remind_email_input");
     private static By submit = By.xpath("//div[@class='left']/input[@type='submit']");
     private static By message = By.id("flash");
+    public SoftAssert softAssert = new SoftAssert();
 
     //~ Methods --------------------------------------------------------------------------------------------------------
 
     /**
      * Method to Click the Month Link
      *
-     * @param driver in value
+     * @param driver    in value
      * @param monthName in value
-     *
      * @throws Exception on error
      */
     public void clickMonth(WebDriver driver, String monthName) throws Exception {
@@ -40,59 +40,51 @@ public class HomePage {
      * Method to Click the Submit Button
      *
      * @param driver in value
-     *
      * @throws Exception on error
      */
     public void clickSubmit(WebDriver driver) throws Exception {
         try {
             driver.findElement(submit).click();
         } catch (Exception e) {
-            System.out.println("Failed : Cannot find Submit Button");
+            softAssert.fail("Failed : Cannot find Submit Button");
         }
     }
 
     /**
      * Method to set the email id value in email id field
      *
-     * @param driver in value
+     * @param driver   in value
      * @param strEmail in value
-     *
      * @throws Exception on error
      */
     public void setTextEmail(WebDriver driver, String strEmail) throws Exception {
         try {
             driver.findElement(email).sendKeys(strEmail);
         } catch (Exception e) {
-            System.out.println("Failed : Cannot find email text box");
+            softAssert.fail("Failed : Cannot find email text box");
         }
     }
 
     /**
      * Method to verify success Message
      *
-     * @param driver in value
+     * @param driver  in value
      * @param emailID in value
-     *
      * @throws Exception on error
      */
     public void verifyMessage(WebDriver driver, String emailID) throws Exception {
-        try {
-            String successMessage = driver.findElement(message).getText();
-            Assert.assertTrue(successMessage.contentEquals(
-                    "Thanks! We will notify you of our new shoes at this email: " + emailID),
-                "Verify Success Message for EmailID " + emailID);
-        } catch (AssertionError a) {
-            System.out.println("Failed : Success Message for EmailID " + emailID + " does not exist");
-        }
+        String successMessage = driver.findElement(message).getText();
+        softAssert.assertTrue(successMessage.contentEquals(
+                        "Thanks! We will notify you of our new shoes at this email: " + emailID),
+                "Failed : Success Message for EmailID " + emailID + " does not exist");
     }
 
     /**
      * Method to verify message exist or not based on the flag
      *
-     * @param driver in value
+     * @param driver  in value
      * @param emailID in value
-     * @param flag in value, flag = 0 means a valid email
-     *
+     * @param flag    in value, flag = 0 means a valid email
      * @throws Exception on error
      */
     public void verifyMessage(WebDriver driver, String emailID, int flag) throws Exception {
@@ -101,15 +93,14 @@ public class HomePage {
         } else {
             verifyMessageNotExist(driver, emailID);
         }
+
     }
 
     /**
      * Method to verify message field does not exist
      *
      * @param driver in value
-     *
      * @return out value
-     *
      * @throws Exception on error
      */
     public boolean verifyMessageFieldNotExist(WebDriver driver) throws Exception {
@@ -123,17 +114,21 @@ public class HomePage {
     /**
      * Method to verify message field does not exist
      *
-     * @param driver in value
+     * @param driver  in value
      * @param emailID in value
-     *
      * @throws Exception on error
      */
     public void verifyMessageNotExist(WebDriver driver, String emailID) throws Exception {
-        try {
-            Assert.assertTrue(verifyMessageFieldNotExist(driver),
-                    "Verify Success Message for EmailID " + emailID + " does not exist");
-        } catch (AssertionError a) {
-            System.out.println("Failed : Success Message for EmailID " + emailID + " exist");
-        }
+
+        softAssert.assertTrue(verifyMessageFieldNotExist(driver),
+                "Failed : Success Message for EmailID " + emailID + "  exist");
+
+    }
+
+    /**
+     * Call the method to assert all the failures
+     */
+    public void assertAll() {
+        softAssert.assertAll();
     }
 }
