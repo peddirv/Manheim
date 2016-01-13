@@ -32,7 +32,7 @@ public class HomePage {
         try {
             driver.findElement(By.linkText(monthName)).click();
         } catch (Exception e) {
-            System.out.println("Cannot find Month : " + monthName);
+            System.out.println("Failed : Cannot find Month : " + monthName);
         }
     }
 
@@ -47,7 +47,7 @@ public class HomePage {
         try {
             driver.findElement(submit).click();
         } catch (Exception e) {
-            System.out.println("Cannot find Submit Button");
+            System.out.println("Failed : Cannot find Submit Button");
         }
     }
 
@@ -63,7 +63,7 @@ public class HomePage {
         try {
             driver.findElement(email).sendKeys(strEmail);
         } catch (Exception e) {
-            System.out.println("Cannot find email text box");
+            System.out.println("Failed : Cannot find email text box");
         }
     }
 
@@ -82,7 +82,7 @@ public class HomePage {
                     "Thanks! We will notify you of our new shoes at this email: " + emailID),
                 "Verify Success Message for EmailID " + emailID);
         } catch (AssertionError a) {
-            System.out.println("Success Message for EmailID " + emailID + " does not exist");
+            System.out.println("Failed : Success Message for EmailID " + emailID + " does not exist");
         }
     }
 
@@ -130,10 +130,10 @@ public class HomePage {
      */
     public void verifyMessageNotExist(WebDriver driver, String emailID) throws Exception {
         try {
-            Assert.assertFalse(verifyMessageFieldNotExist(driver),
-                "Verify Success Message for EmailID " + emailID + " does not exist");
+            Assert.assertTrue(verifyMessageFieldNotExist(driver),
+                    "Verify Success Message for EmailID " + emailID + " does not exist");
         } catch (AssertionError a) {
-            System.out.println("Success Message for EmailID " + emailID + " exist");
+            System.out.println("Failed : Success Message for EmailID " + emailID + " exist");
         }
     }
 }

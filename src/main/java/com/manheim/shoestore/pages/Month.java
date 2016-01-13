@@ -48,7 +48,7 @@ public class Month {
             driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
             return driver.findElements(shoeFrames).size();
         } catch (Exception e) {
-            System.out.println("Cannot Find any Shoes");
+            System.out.println("Failed : Cannot Find any Shoes");
             return 0;
         }
     }
@@ -67,7 +67,7 @@ public class Month {
             int textLength = webElements.get(rowNumber).getText().length();
             Assert.assertTrue(textLength > 0, "Verify " + message + " - " + webElements.get(rowNumber).getText());
         } catch (AssertionError e) {
-            System.out.println("Cannot Find - " + message);
+            System.out.println("Failed : Cannot Find - " + message);
         }
     }
 
@@ -83,7 +83,7 @@ public class Month {
             String imgURL = webElements.get(rowNumber).getAttribute("src");
             Assert.assertTrue(imgURL.toLowerCase().contains(".jpg"), "Verify Image - " + imgURL);
         } catch (AssertionError e) {
-            System.out.println("Cannot Find - Image");
+            System.out.println("Failed : Cannot Find - Image");
         }
     }
 
