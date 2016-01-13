@@ -32,7 +32,7 @@ public class HomePage {
         try {
             driver.findElement(By.linkText(monthName)).click();
         } catch (Exception e) {
-            System.out.println("Failed : Cannot find Month : " + monthName);
+            softAssert.fail("Failed : Cannot find Month : " + monthName);
         }
     }
 
