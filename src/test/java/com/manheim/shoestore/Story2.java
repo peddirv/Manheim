@@ -1,14 +1,25 @@
 package com.manheim.shoestore;
 
+/**
+ * Created by rpeddi on 1/12/2016.
+ *
+ * Story 2: Submit email for reminder
+ *
+ *  In order to be reminded of upcoming shoe releases As a user of the Shoe Store I want to be able to submit my email address
+ *
+ *  Acceptance Criteria
+ *
+ *  There should be an area to submit email address
+ *  on successful submission of a valid email address user should receive a message Thanks! We will notify you of our new shoes at this email: users email address
+ */
+
+
 import com.manheim.shoestore.pages.HomePage;
 import com.manheim.shoestore.pages.Month;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-/**
- * Created by rpeddi on 1/12/2016.
- */
 
 
 public class Story2 extends TestExtension {
@@ -53,5 +64,6 @@ public class Story2 extends TestExtension {
         homePage.setTextEmail(driver, emailID);
         homePage.clickSubmit(driver);
         homePage.verifyMessage(driver, emailID, flag);
+        homePage.assertAll();
     }
 }
