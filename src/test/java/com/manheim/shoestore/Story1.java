@@ -24,6 +24,7 @@ import org.testng.asserts.SoftAssert;
 
 public class Story1 extends TestExtension {
     private SoftAssert softAssert = new SoftAssert();
+
     //~ Methods --------------------------------------------------------------------------------------------------------
 
     /**
